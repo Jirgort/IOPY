@@ -1,0 +1,17 @@
+
+<div class="container"> 
+  <a data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"  title="This top tooltip is themed via CSS variables." class="btn btn-secondary"
+   >
+Prueba
+</a>
+<style>
+ 
+  .custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+}
+</style>
+  <script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
+</div>

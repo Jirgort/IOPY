@@ -1,0 +1,25 @@
+
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">TEC</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Algoritmo que encuentra las rutas mas cortas" href="rutas-mas-cortas">Rutas mas cortas</a>
+        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="" href="problema-mochila">Problema de la Mochila</a>
+        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title=""  href="reemplazo-equipos">Reemplazo de Equipos</a>
+        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="" href="arboles-binarios-de-busqueda">Arboles Binarios de Busqueda Optimos</a>
+        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title=""  href="series-deportivas">Series Deportivas</a>
+        <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="" href="multiplicacion-de-matrices">Multiplicacion de matrices</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  </script>
+</nav>
+  <router-outlet></router-outlet>
