@@ -2,3 +2,23 @@
 .custom-tooltip {
     --bs-tooltip-bg: var(--bs-primary);
   }
+  .logo-image{
+    width: 126px;
+    height: 66px;
+    overflow: hidden;
+}
+.nav-link{
+  border-style: outset;
+  border-color: rgb(215, 114, 56);
+  text-align: center;
+  color: rgb(245, 243, 243)
+}
+
+/* Add background color to navbar links on hover */
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color:  rgb(147, 68, 42);
+  border-radius: 5%;
+}
+.navbar navbar-expand-lg bg-light{
+  background-color: rgb(140, 255, 0);
+}

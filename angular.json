@@ -110,5 +110,7 @@
       }
     }
   },
-  "defaultProject": "IO-Proyecto"
+  "cli": {
+    "analytics": false
+  }
 }
