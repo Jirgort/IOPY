@@ -47,9 +47,9 @@ export class RutasCortasComponent implements OnInit {
   floyd(nodos:any){
     var n = nodos.nodos.length;
     let matriz = this.obtenerMatrizCostos(nodos.nodos);
-    for (let k = 1; k < n; k++) {
-      for (let i = 1; i < n; i++) {
-        for (let j = 1; j < n; j++) {
+    for (let k = 0; k < n; k++) {
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
           let costo = matriz[i][k] + matriz[k][j];
           if(costo < matriz[i][j]){
             matriz[i][j] = costo;
