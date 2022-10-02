@@ -39,6 +39,7 @@ export class RutasCortasComponent implements OnInit {
     }
     this.floyd(a);
   }
+
   /**
    * Se encarga de calcular las rutas cortas
    * @param nodos Objeto con los nodos y sus caminos
@@ -49,10 +50,14 @@ export class RutasCortasComponent implements OnInit {
     for (let k = 1; k < n; k++) {
       for (let i = 1; i < n; i++) {
         for (let j = 1; j < n; j++) {
-          //Minimo
+          let costo = matriz[i][k] + matriz[k][j];
+          if(costo < matriz[i][j]){
+            matriz[i][j] = costo;
+          }
         }
       }   
     }
+    return matriz;
   }
 
   /**
