@@ -39,10 +39,13 @@ export class RutasCortasComponent implements OnInit {
     }
     this.floyd(a);
   }
-
+  /**
+   * Se encarga de calcular las rutas cortas
+   * @param nodos Objeto con los nodos y sus caminos
+   */
   floyd(nodos:any){
     var n = nodos.nodos.length;
-    let matriz = this.toMatrix(nodos.nodos);
+    let matriz = this.obtenerMatrizCostos(nodos.nodos);
     for (let k = 1; k < n; k++) {
       for (let i = 1; i < n; i++) {
         for (let j = 1; j < n; j++) {
@@ -52,24 +55,41 @@ export class RutasCortasComponent implements OnInit {
     }
   }
 
-  toMatrix(A:any){
-    let matriz = Array(A.length).fill(A.length);
-    let nodesIndex:any = {}
+  /**
+   * Convierte un arreglo a una matriz con los costos
+   * @param A un arreglo con los nodos y sus caminos 
+   * @returns una matriz con los costos de los caminos
+   */
+  obtenerMatrizCostos(A:any){
+    //Matriz con ceros
+    let matriz = new Array(A.length);
+    let nodesIndex:any = [];
 
-    // Ceros en la diagonal
+    //Se llena la matriz con ceros
     for (let i = 0; i < A.length; i++) {
-      matriz[i][i] = 0;
+      matriz[i] = new Array(A.length).fill(0);
     }
 
     // Objeto con los índices
     for (let i = 0; i < A.length; i++) {
-      nodesIndex[A.nombre] = i;
+      nodesIndex[i] = A[i].nombre;
     }
 
+    //Recorremos la matriz
     for (let i = 0; i < A.length; i++) {
-      for (let j = 0; j < A.caminos.length; j++) {
-        let nodeIndex = nodesIndex[A.caminos[j].nombre]
-        matriz[i][nodeIndex]
+      for (let j = 0; j < A.length; j++) {
+        //Si el nodo tiene un camino se coloca el costo
+        //Si no existe un camino se coloca infinito
+        let nodeName = nodesIndex[j];
+        if(i !== j){
+          let caminos = A[i].caminos;
+          let caminoActual = caminos.find(({ nombre }:any) => nombre === nodeName);
+          if( caminoActual != undefined){
+            matriz[i][j] = caminoActual.costo;
+          }else{
+            matriz[i][j] = Infinity;
+          }
+        }
       }      
     }
     return matriz;
