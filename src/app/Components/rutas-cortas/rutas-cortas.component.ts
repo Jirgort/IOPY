@@ -10,6 +10,9 @@ export class RutasCortasComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    let vertice= true;
+    let conectarVertice = false;
+    
     var a = 
     {
       nodos:[
@@ -99,6 +102,13 @@ export class RutasCortasComponent implements OnInit {
     }
     return matriz;
 
+  }
+
+  toggleButton(name:string){
+    let button = document.getElementById(name);
+    if(button != null){
+      button.classList.toggle("active");
+    }
   }
 
 }

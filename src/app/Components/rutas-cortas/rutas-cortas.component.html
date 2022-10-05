@@ -1,3 +1,25 @@
+
+<!-- Contenedor con el canvas y los botones -->
+<div class="container">
+    <!-- Botones -->
+    <!-- <div class="container w-75 mb-3"> -->
+    <div class="container-fluid w-75 mb-3">
+        <button id="vertice"type="button" class="btn btn-outline-light active me-2" (click)="toggleButton('vertice')">Vertice</button>
+
+        <button id="conectar"type="button" class="btn btn-outline-light" (click)="toggleButton('conectar')">Conectar vertice</button>
+
+        
+        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="button">
+            Unir vértices
+        </button> -->
+    </div>
+    <!-- Canvas -->
+    <div class="container text-center">
+        <canvas class="bg-white w-75 h-100">
+        </canvas>
+    </div>
+</div>
+
 <!-- <div class="window-notice" id="window-notice">
     <div class="content">
         <div class="content-text">EL programa solicitado no está disponible. 
