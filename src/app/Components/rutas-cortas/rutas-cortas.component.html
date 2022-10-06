@@ -1,28 +1,30 @@
+<div class="container bg-white text-center">
+    <table class="table" id="tabla">
+        <thead>
+            <tr>
+                <th>
 
-<!-- Contenedor con el canvas y los botones -->
-<div class="container">
-    <!-- Botones -->
-    <!-- <div class="container w-75 mb-3"> -->
-    <div class="container-fluid w-75 mb-3">
-        <button id="vertice"type="button" class="btn btn-outline-light active me-2" (click)="toggleButton('vertice')">Vertice</button>
+                </th>
+                <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,10)" let-i="index" >
+                    <th (input)="onNameChange($event)" class="{{columna}}" scope="col" contenteditable="true" *ngIf="i < 10">{{columna}}</th>
+                </ng-template>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-fila [ngForOf]="alphabet.slice(0,10)" let-i="index" >
+                <tr id="{{fila}}">
+                    <th class="{{fila}}"scope="row" contenteditable="true" *ngIf="i < 10">
+                        {{fila}}
+                    </th>
+                    <ng-template ngFor let-columna [ngForOf]="alphabet" let-j="index" >
+                        <td  *ngIf="i == j" id="{{fila}}{{columna}}">0</td>
+                        <td  id="{{fila}},{{columna}}" contenteditable="true" *ngIf="j < 9">∞</td>
+                    </ng-template>
+                </tr>
+            </ng-template>
+        </tbody>
 
-        <button id="conectar"type="button" class="btn btn-outline-light" (click)="toggleButton('conectar')">Conectar vertice</button>
+    </table>
+    <button class="btn btn-primary" (click)="calcularRutasCortas()">Calcular</button>
 
-        
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="button">
-            Unir vértices
-        </button> -->
-    </div>
-    <!-- Canvas -->
-    <div class="container text-center">
-        <canvas class="bg-white w-75 h-100">
-        </canvas>
-    </div>
 </div>
-
-<!-- <div class="window-notice" id="window-notice">
-    <div class="content">
-        <div class="content-text">EL programa solicitado no está disponible. 
-        <div class="content-buttons"><a href="#" id="close-button">Aceptar</a></div>
-    </div>
-</div> -->
