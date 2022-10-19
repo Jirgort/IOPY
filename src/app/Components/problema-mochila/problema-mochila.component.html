@@ -1,7 +1,40 @@
-<div class="window-notice" id="window-notice">
-    <div class="content">
-        <div class="content-text">EL programa solicitado no está disponible. 
-     
-        <div class="content-buttons"><a href="#" id="close-button">Aceptar</a></div>
+<div class="container mt-2">
+    <!-- Input para generar tabla  -->
+    <div class="container text-center">
+        <div class="row justify-content-md-center">
+            <div class="col input-group mb-3">
+                <span class="input-group-text"></span>
+                <input (input)="getInputCapacidad($event)" type="number" class="form-control" placeholder="Ingrese la capacidad de la mochila">
+            </div>
+            <div class="col input-group mb-3">
+                <span class="input-group-text"></span>
+                <input (input)="getInputObjetos($event)" type="number" class="form-control" placeholder="Ingrese el número de objetos">
+            </div>
+        </div>
+        <button (click)=this.generarTabla() class="btn btn-primary">Generar tabla</button>
     </div>
-  </div>
+
+    <div class="container mt-3">
+        <table class="table table-striped bg-white">
+            <thead>
+                <tr>
+                    <th>Objeto</th>
+                    <th>Valor</th>
+                    <th>Peso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of objetosIndex">
+                    <td>Objeto {{c}}</td>
+                    <td>
+                        <input class="form-control" type="number" placeholder="valor">
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" placeholder="valor">
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
