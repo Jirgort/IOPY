@@ -4,12 +4,12 @@
         <div class="row justify-content-md-center">
             <div class="col input-group mb-3">
                 <span class="input-group-text"></span>
-                <input (input)="getInputCapacidad($event)" type="number" class="form-control"
+                <input id="capacidad" (input)="getInputCapacidad($event)" type="number" class="form-control"
                     placeholder="Ingrese la capacidad de la mochila">
             </div>
             <div class="col input-group mb-3">
                 <span class="input-group-text"></span>
-                <input (input)="getInputObjetos($event)" type="number" class="form-control"
+                <input id="objetos" (input)="getInputObjetos($event)" type="number" class="form-control"
                     placeholder="Ingrese el número de objetos">
             </div>
         </div>
@@ -20,7 +20,6 @@
                 </div>
                 <div class="col-auto d-inline-flex">
                     <input type="file" accept=".json" class="form-control" (change)="this.handleFile($event)">
-                    <!-- <button class="btn btn-secondary w-50">Cargar Archivo</button> -->
                 </div>
             </div>
         </div>
@@ -37,15 +36,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let c of objetosIndex">
-                    <td>Objeto {{c}}</td>
-                    <td>
-                        <input class="form-control" type="number" placeholder="valor">
-                    </td>
-                    <td>
-                        <input class="form-control" type="number" placeholder="valor">
-                    </td>
-                </tr>
+                <ng-template [ngIf]="(this.archivo |json) == ({}|json)" [ngIfElse]="fileTable">
+                    <tr *ngFor="let c of objetosIndex" >
+                        <td >Objeto {{c}}</td>
+                        <td>
+                            <input class="form-control" type="number" placeholder="valor">
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" placeholder="valor">
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template #fileTable>
+                    <tr *ngFor="let c of objetosIndex" >
+                        <td >{{getObjArrField(this.archivo,c,"nombre")}}</td>
+                        <td>
+                            <input class="form-control" type="number" placeholder="valor" value="{{getObjArrField(this.archivo,c,'valor')}}">
+                        </td>
+                        <td>
+                            <input class="form-control" type="number" placeholder="valor" value="{{getObjArrField(this.archivo,c,'peso')}}">
+                        </td>
+                    </tr>
+                </ng-template>
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
