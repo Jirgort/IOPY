@@ -10,6 +10,7 @@ export class ProblemaMochilaComponent implements OnInit {
   capacidad:number = 5;
   objetos:number = 0;
   objetosIndex:number[] = [];
+  archivo:Object = {};
 
   constructor() { }
 
@@ -32,5 +33,13 @@ export class ProblemaMochilaComponent implements OnInit {
 
   getInputObjetos(event:any){
     this.objetos = parseInt(event.target.value);
+  }
+
+  handleFile(event:any){
+    let file = event.target.files[0];
+    let reader = new FileReader();
+    let result = null;
+    reader.onload = (e) => {result = e.target?.result;};
+    console.log(result);
   }
 }

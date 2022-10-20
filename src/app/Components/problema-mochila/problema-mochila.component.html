@@ -4,18 +4,31 @@
         <div class="row justify-content-md-center">
             <div class="col input-group mb-3">
                 <span class="input-group-text"></span>
-                <input (input)="getInputCapacidad($event)" type="number" class="form-control" placeholder="Ingrese la capacidad de la mochila">
+                <input (input)="getInputCapacidad($event)" type="number" class="form-control"
+                    placeholder="Ingrese la capacidad de la mochila">
             </div>
             <div class="col input-group mb-3">
                 <span class="input-group-text"></span>
-                <input (input)="getInputObjetos($event)" type="number" class="form-control" placeholder="Ingrese el número de objetos">
+                <input (input)="getInputObjetos($event)" type="number" class="form-control"
+                    placeholder="Ingrese el número de objetos">
             </div>
         </div>
-        <button (click)=this.generarTabla() class="btn btn-primary">Generar tabla</button>
+        <div class="container d-flex justify-content-center">
+            <div class="row gx-2">
+                <div class="col-auto">
+                    <button class="btn btn-primary" (click)=this.generarTabla()>Generar tabla</button>
+                </div>
+                <div class="col-auto d-inline-flex">
+                    <input type="file" accept=".json" class="form-control" (change)="this.handleFile($event)">
+                    <!-- <button class="btn btn-secondary w-50">Cargar Archivo</button> -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container mt-3 text-center" *ngIf="this.objetosIndex.length > 0">
-        <table class="table table-striped bg-white">
+    <!-- Tabla con los pesos y valores -->
+    <div class="container mt-3 text-center " *ngIf="this.objetosIndex.length > 0">
+        <table class="table table-striped bg-white rounded">
             <thead>
                 <tr>
                     <th>Objeto</th>
@@ -35,6 +48,15 @@
                 </tr>
             </tbody>
         </table>
-        <button class="btn btn-success">Calcular</button>
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <div class="col-auto">
+                    <button class="btn btn-success">Calcular</button>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary">Generar Archivo</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
