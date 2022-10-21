@@ -102,4 +102,31 @@ export class ProblemaMochilaComponent implements OnInit {
   getObjArrField(obj:Object, index:number, field:string):any{
     return this.getField(obj, "objetos")[index][field as keyof Object];
   }
+
+  createFile():any{
+    let fileResult:any = {}
+    fileResult["capacidad"] = this.capacidad;
+    fileResult["objetos"] = [];
+    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
+      if(index != 0){
+        let obj:any = {};
+        obj["nombre"] = row.querySelector("td:nth-child(1)")?.innerHTML;
+        obj["peso"] = parseInt(row.cells[1].children[0].value);
+        obj["valor"] = parseInt(row.cells[2].children[0].value);
+        fileResult["objetos"].push(obj);
+      }
+    });
+    return fileResult;
+  }
+
+  downloadFile(){
+    let file = JSON.stringify(this.createFile()); 
+    let blob = new Blob([file],{type:'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'archivo.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 }

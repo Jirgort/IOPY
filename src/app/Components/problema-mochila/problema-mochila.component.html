@@ -27,7 +27,7 @@
 
     <!-- Tabla con los pesos y valores -->
     <div class="container mt-3 text-center " *ngIf="this.objetosIndex.length > 0">
-        <table class="table table-striped bg-white rounded">
+        <table id="tabla" class="table table-striped bg-white rounded">
             <thead>
                 <tr>
                     <th>Objeto</th>
@@ -49,7 +49,7 @@
                 </ng-template>
                 <ng-template #fileTable>
                     <tr *ngFor="let c of objetosIndex" >
-                        <td >{{getObjArrField(this.archivo,c,"nombre")}}</td>
+                        <td contenteditable="true">{{getObjArrField(this.archivo,c,"nombre")}}</td>
                         <td>
                             <input class="form-control" type="number" placeholder="valor" value="{{getObjArrField(this.archivo,c,'valor')}}">
                         </td>
@@ -66,7 +66,7 @@
                     <button class="btn btn-success">Calcular</button>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary">Generar Archivo</button>
+                    <button (click)="this.downloadFile()" class="btn btn-primary">Generar Archivo</button>
                 </div>
             </div>
         </div>
