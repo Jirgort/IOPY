@@ -1,0 +1,20 @@
+{
+	"capacidad":3,
+	"objetos":[
+		{
+			"nombre": "Objeto 0",
+			"valor": 1,
+			"peso": 2
+		},
+		{
+			"nombre": "Objeto 1",
+			"valor": 30,
+			"peso": 3
+		},
+		{
+			"nombre": "Objeto 2",
+			"valor": 10,
+			"peso": 2
+		}		
+	]
+}
