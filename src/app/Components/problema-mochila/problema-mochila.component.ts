@@ -8,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 
 export class ProblemaMochilaComponent implements OnInit {
 
-  capacidad:number = 5;
+  capacidad:number = 0;
   objetos:number = 0;
   objetosIndex:number[] = [];
-  archivo:Object = {};
 
+  archivo:Object = {};
 
   constructor() { }
 
@@ -91,18 +91,31 @@ export class ProblemaMochilaComponent implements OnInit {
     } 
   }
 
-  toArray(obj:any){
-    return Array(obj);
-  }
-
+  /**
+   * Retorna el valor de una llave de un objeto
+   * @param obj Objeto JSON
+   * @param field campo a obtener
+   * @returns el campo especificado del objeto
+   */
   getField(obj:Object, field:string):any{
     return obj[field as keyof Object];
   }  
 
+  /**
+   * Obtiene el array de objetos
+   * @param obj   Objeto JSON
+   * @param index Indice del objeto
+   * @param field campo a obtener
+   * @returns El array de objetos
+   */
   getObjArrField(obj:Object, index:number, field:string):any{
     return this.getField(obj, "objetos")[index][field as keyof Object];
   }
 
+  /**
+   * Genera un archivo json con la información de la tabla
+   * @returns Objeto con la información de la tabla
+   */
   createFile():any{
     let fileResult:any = {}
     fileResult["capacidad"] = this.capacidad;
@@ -110,7 +123,7 @@ export class ProblemaMochilaComponent implements OnInit {
     document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
       if(index != 0){
         let obj:any = {};
-        obj["nombre"] = row.querySelector("td:nth-child(1)")?.innerHTML;
+        obj["nombre"] = row.querySelector("td:nth-child(1)")?.innerText;
         obj["peso"] = parseInt(row.cells[1].children[0].value);
         obj["valor"] = parseInt(row.cells[2].children[0].value);
         fileResult["objetos"].push(obj);
@@ -119,6 +132,9 @@ export class ProblemaMochilaComponent implements OnInit {
     return fileResult;
   }
 
+  /**
+   * Descarga el archivo con la información de la tabla
+   */
   downloadFile(){
     let file = JSON.stringify(this.createFile()); 
     let blob = new Blob([file],{type:'application/json'});
@@ -128,5 +144,118 @@ export class ProblemaMochilaComponent implements OnInit {
     a.download = 'archivo.json';
     a.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  /**
+   * Obtiene los valores de los objetos de la tabla
+   * @returns valores de los objetos
+   */
+  getValor():any{
+    let valores:any = [];
+    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
+      if(index != 0){
+        valores.push(parseInt(row.cells[1].children[0].value));
+      }
+    });
+    return valores;
+  }
+
+  /**
+   * Obtiene el peso de los objetos de la tabla
+   * @returns pesos de los objetos
+   */
+  getPesos(){
+    let pesos:any = [];
+    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
+      if(index != 0){
+        pesos.push(parseInt(row.cells[2].children[0].value));
+      }
+    }); 
+    return pesos;
+  }
+
+  /**
+   * Genera una matriz con las ganancias de cada objeto, el resultado esta en la última fila y columan
+   * @param capacidad Capacidad de la mochila
+   * @param pesos     Arreglo con los pesos de los objetos
+   * @param valores   Valore de los objetos
+   * @param n         Cantidad de objetos
+   * @returns Una matriz con el resultado de la mochila
+   */
+  knapSack(capacidad:number, pesos:number[], valores:number[], n:number)
+  {
+      let i, w;
+      let K = new Array(n + 1);
+
+      for (i = 0; i <= n; i++)
+      {
+          K[i] = new Array(capacidad + 1);
+          for (w = 0; w <= capacidad; w++)
+          {
+              if (i == 0 || w == 0)
+                  K[i][w] = 0;
+              else if (pesos[i - 1] <= w)
+                  K[i][w]
+                      = Math.max(valores[i - 1]
+                       + K[i - 1][w - pesos[i - 1]],
+                       K[i - 1][w]);
+              else
+                  K[i][w] = K[i - 1][w];
+          }
+      }
+
+      return K;
+  }
+   
+  /**
+   * Muestra el resultdo en la tabla de resultados
+   * @param matrix Matriz con los valores obtenidos del algoritmo
+   */
+  showResult(matrix:number[][]){
+    let tableRows = document.getElementById("resultTable")?.querySelectorAll("tr");
+    for (let i = 1; i < matrix.length; i++) {
+      let row = document.getElementById("resultTable")?.querySelectorAll("tr")[i];
+      for (let j = 1; j < matrix.length; j++) {
+        let cell:any = row?.querySelector(`td:nth-child(${j+1})`)
+        if(cell !== undefined || cell !== null){ 
+          cell.innerHTML = matrix[i][j].toString();
+        }
+      }
+      
+    }
+
+  }
+
+  /**
+   * Ejecuta el algoritmo de la mochila
+   */
+  handleCalculate(){
+    let valores = this.getValor();
+    let pesos = this.getPesos();
+    let knpasackMatrix = this.knapSack(this.capacidad, pesos, valores, this.objetos);
+    this.showResult(knpasackMatrix);
+  } 
+
+  /**
+   * Array con los nombres de los objetos
+   * @returns Arreglo con los nombres obtenidos de la tabla
+   */
+  getObjectNames(){
+    let nombres:any = []
+    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
+      if(index != 0){
+        let obj:any = {};
+        nombres.push(row.querySelector("td:nth-child(1)")?.innerText.replace("\n",""));
+      }
+    });
+    return nombres;
+  }
+
+  /**
+   * Retorna un array que va desde 0 al tamaño de la mochila
+   * @returns la escala del problema
+   */
+  getScale(){
+    return Array.from(Array(this.capacidad)).map((x, i) => i )
   }
 }
