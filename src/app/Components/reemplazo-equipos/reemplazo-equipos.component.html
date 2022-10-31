@@ -29,9 +29,12 @@
                 <div class="col-auto">
                     <button class="btn btn-primary" (click)=this.generarTabla()>Generar tabla</button>
                 </div>
-               
+                <div class="col-auto d-inline-flex">
+                    <input type="file" accept=".json" class="form-control" (change)="this.handleFile($event)">
+                </div>
             </div>
         </div>
+      
         <div class="container mt-3 text-center " *ngIf="this.objetosIndex.length > 0">
             <table id="tabla" class="table table-striped bg-white rounded">
                 <thead>
@@ -42,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-template [ngIf]="(this.archivo |json) == ({}|json)">
+                    <ng-template [ngIf]="(this.archivo |json) == ({}|json)"[ngIfElse]="fileTable">
                         <tr *ngFor="let c of objetosIndex" >
                             <td contenteditable="true">{{c}}</td>
                             <td>
@@ -53,12 +56,27 @@
                             </td>
                         </tr>
                     </ng-template>
+                    <ng-template #fileTable>
+                        <tr *ngFor="let c of objetosIndex" >
+                            <td contenteditable="true">{{getObjArrField(this.archivo,c,"ano")}}</td>
+                            <td>
+                                <input class="form-control" type="number" placeholder="valor" value="{{getObjArrField(this.archivo,c,'mantenimiento')}}">
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" placeholder="valor" value="{{getObjArrField(this.archivo,c,'reventa')}}">
+                            </td>
+                        </tr>
+                    </ng-template>
                 </tbody>
             </table>
+
             <div class="d-flex justify-content-center">
                 <div class="row">
                     <div class="col-auto">
                         <button (click)="this.calculate()" class="btn btn-success">Calcular</button>
+                    </div>
+                    <div class="col-auto">
+                        <button (click)="this.downloadFile()" class="btn btn-primary">Generar Archivo</button>
                     </div>
                     
                 </div>

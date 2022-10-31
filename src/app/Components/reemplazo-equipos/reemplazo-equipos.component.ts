@@ -10,10 +10,13 @@ export class ReemplazoEquiposComponent implements OnInit {
 
   costoInicial:number=0;
   plazoProyecto:number=0;
+  objetos:number = 0;
   vidaUtil:number=0;
   objetosIndex:number[] = [];
   archivo:Object = {};
   optima:number[]=[];
+
+
 
   constructor() { }
 
@@ -38,13 +41,65 @@ export class ReemplazoEquiposComponent implements OnInit {
     }
 
     //Verifica si se cargó un archivo
-    /*if(Object.keys(this.archivo).length != 0 && this.getFileInfo(this.archivo) ){
+    if(Object.keys(this.archivo).length != 0 && this.getFileInfo(this.archivo) ){
       return;
-    }*/
+    }
 
     this.objetosIndex = Array(this.vidaUtil).fill(0).map((x,i)=>i);
 
   }
+  getFileInfo(file:any){
+    if(file.hasOwnProperty("costoInicial") && file.hasOwnProperty("plazo")&& file.hasOwnProperty("vidaUtil") ){
+      this.costoInicial = file["costoInicial"];
+      this.vidaUtil=file["vidaUtil"];
+      this.objetos = file["objetos"].length;
+      this.plazoProyecto=file["plazo"];
+      //Cambia el input en la vista
+      document.getElementById("costoInicial")?.setAttribute("value", this.costoInicial.toString());
+      document.getElementById("vidaUtil")?.setAttribute("value", this.vidaUtil.toString());
+      document.getElementById("plazo")?.setAttribute("value", this.plazoProyecto.toString());
+      document.getElementById("objetos")?.setAttribute("value", this.objetos.toString());
+      return 0;
+    }else{
+      alert("El archivo no contiene la información necesaria");
+      return 1;
+    } 
+    
+  }
+  getField(obj:Object, field:string):any{
+    return obj[field as keyof Object];
+  }  
+  createFile():any{
+    let fileResult:any = {}
+    fileResult["costoInicial"] = this.costoInicial;
+    fileResult["plazo"] = this.plazoProyecto;
+    fileResult["vidaUtil"] = this.vidaUtil;
+    fileResult["objetos"] = [];
+    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
+      if(index != 0){
+        let obj:any = {};
+        obj["ano"] = row.querySelector("td:nth-child(1)")?.innerText;
+        obj["mantenimiento"] = parseInt(row.cells[1].children[0].value);
+        obj["reventa"] = parseInt(row.cells[2].children[0].value);
+        fileResult["objetos"].push(obj);
+      }
+    });
+    return fileResult;
+  }
+  downloadFile(){
+    let file = JSON.stringify(this.createFile()); 
+    let blob = new Blob([file],{type:'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'archivo.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  getObjArrField(obj:Object, index:number, field:string):any{
+    return this.getField(obj, "objetos")[index][field as keyof Object];
+  }
+
   getPlan(){
     return this.optima;
   }
