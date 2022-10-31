@@ -1,7 +1,106 @@
-<div class="window-notice" id="window-notice">
-    <div class="content">
-        <div class="content-text">EL programa solicitado no está disponible. 
-     
-        <div class="content-buttons"><a href="#" id="close-button">Aceptar</a></div>
+<div class="container mt-2">
+    <!-- Input para generar tabla  -->
+    <div class="container text-center">
+        <div class="row justify-content-md-center">
+            <div class="col input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                        Costo Inical
+                </span>
+                <input id="capacidad" (input)="getInputCostoInicial($event)" type="number" class="form-control"
+                    placeholder="Ingrese el costo inicial del producto">
+            </div>
+            <div class="col input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                    Plazo De Proyecto
+                </span>
+                <input id="objetos" (input)="getInputPlazoProyecto($event)" type="number" class="form-control"
+                    placeholder="Ingrese el Plazo del proyecto">
+            </div>
+            <div class="col input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                    Vida Util
+                </span>
+                <input id="objetos" (input)="getInputVidaUtil($event)" type="number" class="form-control"
+                    placeholder="Ingrese la vida util del proyecto">
+            </div>
+        </div>
+        <div class="container d-flex justify-content-center">
+            <div class="row gx-2">
+                <div class="col-auto">
+                    <button class="btn btn-primary" (click)=this.generarTabla()>Generar tabla</button>
+                </div>
+               
+            </div>
+        </div>
+        <div class="container mt-3 text-center " *ngIf="this.objetosIndex.length > 0">
+            <table id="tabla" class="table table-striped bg-white rounded">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Mantenimiento</th>
+                        <th>Reventa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template [ngIf]="(this.archivo |json) == ({}|json)">
+                        <tr *ngFor="let c of objetosIndex" >
+                            <td contenteditable="true">{{c}}</td>
+                            <td>
+                                <input class="form-control" type="number" placeholder="Costo">
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" placeholder="Costo">
+                            </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <div class="row">
+                    <div class="col-auto">
+                        <button (click)="this.calculate()" class="btn btn-success">Calcular</button>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="container mt-3 text-center" *ngIf="this.objetosIndex.length > 0" >
+                <h1 class="text-light">Resultado</h1>
+                <table id="resultTable" class="table table-striped bg-white rounded">
+                    <thead>
+                        <tr>
+                            <th>t</th>
+                            <th>
+                            G(t)
+                            </th>
+                            <th>proximo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let col of getObjectNames()">
+                            <td>{{col}}</td>
+                            <td >
+                               0
+                            </td>
+                            <td >
+                                0
+                             </td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div >
+                <h1>Solucion optima</h1>
+                <table id="resultTable" class="table table-striped bg-white rounded">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th *ngFor="let nombre of getPlan()">
+                              {{nombre}}
+                            </th>
+                        </tr>
+                    </thead>
+                   
+                </table>
+            </div>
     </div>
-  </div>
