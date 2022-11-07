@@ -15,7 +15,7 @@ export class ReemplazoEquiposComponent implements OnInit {
   objetosIndex:number[] = [];
   archivo:Object = {};
   optima:number[]=[];
-
+  
 
 
   constructor() { }
