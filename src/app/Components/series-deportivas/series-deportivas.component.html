@@ -1,7 +1,116 @@
-<div class="window-notice" id="window-notice">
-    <div class="content">
-        <div class="content-text">EL programa solicitado no está disponible. 
-     
-        <div class="content-buttons"><a href="#" id="close-button">Aceptar</a></div>
-    </div>
-  </div>
+<div class="container mt-2" style="width: 724px;" >
+    <!-- Input para generar tabla  -->
+    <div class="container text-center" >
+        <div class="row justify-content-md-center">
+            <div class="col input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                        Numero de juegos
+                </span>
+                <input id="numJuegos" style="width: 50px;" (input)="getInputNumJuegos($event)" type="text" class="form-control"
+                    placeholder="Ingrese el numero de juegos">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                    Probabilidad de A para ganar en casa
+                </span>
+                <input id="probaCasa" (input)="getInputProbaCasa($event)" value="" type="text" class="form-control"
+                    placeholder="Ingrese la probabilidad de A de ganar en casa">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                    Probabilidad de A para ganar de visita
+                </span>
+                <input id="probaVisita" (input)="getInputProbaVisita($event)" type="text" class="form-control"
+                    placeholder="Ingrese la probabilidad de A para ganar de visita">
+            </div>
+        </div>
+        <div>
+            <span>
+                Formato
+            </span>
+            
+                <button id="btnCasa" class="btn btn-success" (click)=this.contJuegosC()>Casa</button>
+         
+           
+                <button id="btnVisita" class="btn btn-warning" (click)=this.contJuegosV()>Visita</button>
+            
+        </div>
+        
+        <div class="container mt-3 text-center " *ngIf="this.contadorFormato <= this.numJuegos">
+          <div class="row">
+            <div class="btn-group" >
+                <div *ngFor="let p of formato" >
+                    <div *ngIf="p=='C'" >
+                        <button id="btnCasa" class="btn btn-success" >C</button>
+                    </div>
+                    <div *ngIf="p=='V'" >
+                        <button id="btnVisita" class="btn btn-warning" >V</button>
+                    </div>
+
+                </div>
+               
+            </div>
+          </div>
+           
+           
+
+        </div>
+        <div>
+            <button type="button" class="btn btn-dark" (click)=this.setBandera()>Vizualizar datos</button>
+        </div>
+        <div *ngIf="this.bandera==true">
+            <h1>Datos generales</h1>
+            <table id="tabla" class="table table-striped bg-white rounded">
+                <thead>
+                    <tr>
+                        <th>Casa</th>
+                        <th>Visita</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A - ph= {{getCasaA()}}</td>
+                        <td>pr= {{getVisitaA()}}</td>
+                    </tr>
+                    <tr>
+                        <td>B - qr= {{getCasaB()}}</td>
+                        <td>qh= {{getVisitaB()}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <h1>
+                    Tabla de Probabilidades
+                </h1>
+                <table id="resultTable" class="table table-striped bg-white rounded">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th *ngFor="let nombre of generarTabla()">
+                              {{nombre}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let col of generarTabla()">
+                            <td>{{col}}</td>
+                            <td *ngFor="let col of generarTabla()">
+                                0
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <button type="button" class="btn btn-dark" (click)=this.algoritmo2()>Calcular probabilidad</button>
+            </div>
+            
+        </div>
+
+
+
+
+
+
+</div>
