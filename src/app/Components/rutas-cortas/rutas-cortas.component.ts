@@ -3,30 +3,55 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-rutas-cortas',
   templateUrl: './rutas-cortas.component.html',
-  styleUrls: ['./rutas-cortas.component.css']
+  styleUrls: ['./rutas-cortas.component.css'],
 })
 export class RutasCortasComponent implements OnInit {
+  public alphabet = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+  public cantidadNodos: number = 0;
+  public archivo: any = {};
 
-  public alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  public cantidadNodos:number =  0;
-  constructor() { }
+  constructor() {}
 
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-
-  }
-
-  calcularRutasCortas(){
+  calcularRutasCortas() {
     let matriz = [];
-    let tabla:any = document.getElementById('tabla');
+    let tabla: any = document.getElementById('tabla');
     for (let i = 1; i < tabla.rows.length; i++) {
-      let columnas:any = [];
+      let columnas: any = [];
       for (let j = 1; j < tabla.rows[i].cells.length; j++) {
         const element = tabla.rows.item(i).cells.item(j);
 
-        if (element.innerHTML == "∞"){
+        if (element.innerHTML == '∞') {
           columnas.push(Infinity);
-        } else{
+        } else {
           columnas.push(parseInt(element.innerHTML));
         }
       }
@@ -34,85 +59,150 @@ export class RutasCortasComponent implements OnInit {
     }
     let resultado = this.floyd(matriz);
     this.reemplazarDatosTabla(resultado);
-    alert("Se ha calculado las rutas cortas");
+    alert('Se ha calculado las rutas cortas');
   }
 
-  reemplazarDatosTabla(matrizResultado:any){
+  reemplazarDatosTabla(matrizResultado: any) {
     for (let i = 1; i < matrizResultado.length; i++) {
-      for(let j = 1; j < matrizResultado[i].length; j++){
-        let tabla:any = document.getElementById('tabla')
-        let celda:any = tabla.rows.item(i).cells.item(j);
-        if (matrizResultado[i][j] == Infinity){
-          celda.innerHTML = "∞";
-        } else{
+      for (let j = 1; j < matrizResultado[i].length; j++) {
+        let tabla: any = document.getElementById('tabla');
+        let celda: any = tabla.rows.item(i).cells.item(j);
+        if (matrizResultado[i][j] == Infinity) {
+          celda.innerHTML = '∞';
+        } else {
           celda.innerHTML = matrizResultado[i][j];
         }
       }
     }
   }
 
-  floyd(tabla:any){
+  floyd(tabla: any) {
     var n = tabla.length;
     for (let k = 0; k < n; k++) {
       for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
           let costo = tabla[i][k] + tabla[k][j];
-          if(costo < tabla[i][j]){
+          if (costo < tabla[i][j]) {
             tabla[i][j] = costo;
           }
         }
-      }   
+      }
     }
     return tabla;
   }
 
-  onNameChange(e:any){
-    let headers = document.getElementsByClassName(e.target.classList.value)
+  onNameChange(e: any) {
+    let headers = document.getElementsByClassName(e.target.classList.value);
     for (let i = 0; i < headers.length; i++) {
       const element = headers[i];
-        element.innerHTML = e.target.innerHTML;
+      element.innerHTML = e.target.innerHTML;
     }
   }
 
-  getInputNodos(event:any){
-    this.nodos = parseInt(event.target.value);
-    console.debug(this.nodos);
-
+  getInputNodos(event: any) {
+    this.cantidadNodos = parseInt(event.target.value);
   }
 
-  handleFile(e:any){
-    let file = e.target.files[0];
-    let reader = new FileReader();
-  
+  formatTable(archivo:any) {
+
+    let encabezados:any = document.getElementById("encabezados")
+    for (let i = 0; i < archivo["encabezadoNodos"].length; i++) {
+      encabezados["children"][i].innerText = archivo["encabezadoNodos"][i]
+    }
+
+    let nodos = archivo["nodos"];
+    for (let i = 0; i < nodos.length; i++) {
+      Object.keys(nodos[i]).forEach((key) => {
+        let arreglo = nodos[i][key];
+        for (let j = 0; j < arreglo.length; j++) {
+          let id = Object.keys(arreglo[j])
+          console.log(arreglo[i], id)
+        }
+      });
+      
+    }
+
+      
+
+
+    // document.getElementById("contenido")?.querySelectorAll("tr")
+    // .forEach((row: any, index) => {
+    //   let nodos = archivo["nodos"];
+    //   let rowData:any = document.getElementById(row.id);
+    //   let cols = rowData["children"];
+    //   for (let i = 0; i < nodos.length; i++) {
+        
+    //     cols[i].innerText = nodos[i][cols[i].id]
+        
+    //   }
+
+    //   // for (let i = 0; i < cols.length; i++) {
+    //   //   cols[i].innerText = nodo[cols.id];
+    //   // }
+    //   // document.
+    //   // getElementById(row.id)?
+    //   // ["children"].
+    //   // forEach((element: any) => {
+    //   //   element.innerText = nodo[element.id]
+    //   // }):null;  
+    // });
+    // archivo["nodos"]
   }
 
-  createFile():any{
-    let fileResult:any = {}
-    fileResult["cantidadNodos"] = this.cantidadNodos;
-    fileResult["encabezadoNodos"] = [];
-    fileResult["nodos"] = [];
-    document.getElementById('tabla')?.querySelectorAll('th').forEach((element:any) => {
-      fileResult["encabezadoNodos"].push(element.innerHTML);
-    });
-    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
-      if(index != 0){
-        let obj:any = {};
-        let nodo:any = {}
-        nodo[row.id] = [];
-        row.querySelectorAll("td").forEach((cell:any) => {
-          let data:any = {}
-          data[cell.id] = cell.innerHTML;
-          nodo[row.id].push(data);
-        });
-        fileResult["nodos"].push(nodo);
-      }
-    });
+  handleFile(event: any) {
+    var file = event.target.files[0];
+    var reader = new FileReader();
+
+    //Carga el archivo en una variable
+    reader.onload = (event) => {
+      this.archivo = JSON.parse(event.target?.result?.toString() || ''); // Convierte el archivo a JSON
+    };
+
+    reader.readAsText(file); //lee el archivo como texto
+    setTimeout(() => {
+      let input: any = document.getElementById('cantidadNodos');
+      this.cantidadNodos = this.archivo.cantidadNodos;
+      input.value = this.archivo.cantidadNodos;
+    }, 300);
+    setTimeout(() => {
+      this.formatTable(this.archivo);
+    }, 300);
+  }
+
+  createFile(): any {
+    let fileResult: any = {};
+    fileResult['cantidadNodos'] = this.cantidadNodos;
+    fileResult['encabezadoNodos'] = [];
+    fileResult['nodos'] = [];
+    document
+      .getElementById('encabezados')
+      ?.querySelectorAll('th')
+      .forEach((element: any) => {
+        fileResult['encabezadoNodos'].push(element.innerText.replace("\n", ""));
+      });
+
+    document
+      .getElementById('tabla')
+      ?.querySelectorAll('tr')
+      .forEach((row: any, index) => {
+        if (index != 0) {
+          let obj: any = {};
+          let nodo: any = {};
+          nodo[row.id] = [];
+          row.querySelectorAll('td').forEach((cell: any) => {
+            let data: any = {};
+            data[cell.id] = cell.innerHTML;
+            nodo[row.id].push(data);
+          });
+          fileResult['nodos'].push(nodo);
+        }
+      });
     return fileResult;
   }
 
-  downloadFile(){
-    let file = JSON.stringify(this.createFile()); 
-    let blob = new Blob([file],{type:'application/json'});
+  downloadFile() {
+    let file = JSON.stringify(this.createFile());
+    let blob = new Blob([file], { type: 'application/json' });
     let url = window.URL.createObjectURL(blob);
     let a = document.createElement('a');
     a.href = url;

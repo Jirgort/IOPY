@@ -27,15 +27,15 @@
 <div class="container bg-white text-center mt-5">
     <table class="table" id="tabla">
         <thead>
-            <tr>
+            <tr id="encabezados">
                 <th>
                 </th>
                 <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.cantidadNodos)" let-i="index" >
-                    <th (input)="onNameChange($event)" id="{{columna}}" scope="col" contenteditable="true" *ngIf="i < this.cantidadNodos">{{columna}}</th>
+                    <th (input)="onNameChange($event)" class="{{columna}}" scope="col" contenteditable="true" *ngIf="i < this.cantidadNodos">{{columna}}</th>
                 </ng-template>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="contenido">
             <ng-template ngFor let-fila [ngForOf]="alphabet.slice(0,this.cantidadNodos)" let-i="index" >
                 <tr id="{{fila}}">
                     <th class="{{fila}}"scope="row" contenteditable="true" *ngIf="i < this.cantidadNodos">
