@@ -233,6 +233,7 @@ export class ProblemaMochilaComponent implements OnInit {
     let valores = this.getValor();
     let pesos = this.getPesos();
     let knpasackMatrix = this.knapSack(this.capacidad, pesos, valores, this.objetos);
+    console.log(knpasackMatrix);
     this.showResult(knpasackMatrix);
   } 
 

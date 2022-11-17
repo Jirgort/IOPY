@@ -10,7 +10,7 @@
                 <span class="input-group-text material-symbols-outlined">
                     category
                 </span>
-                <input id="nodos"  type="number" class="form-control"
+                <input id="cantidadNodos"  type="number" class="form-control"
                     placeholder="Ingrese el número de nodos" (input) = "getInputNodos($event)">
             </div>
         </div>
@@ -27,22 +27,22 @@
 <div class="container bg-white text-center mt-5">
     <table class="table" id="tabla">
         <thead>
-            <tr>
+            <tr id="encabezados">
                 <th>
                 </th>
-                <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.nodos)" let-i="index" >
-                    <th (input)="onNameChange($event)" class="{{columna}}" scope="col" contenteditable="true" *ngIf="i < this.nodos">{{columna}}</th>
+                <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.cantidadNodos)" let-i="index" >
+                    <th (input)="onNameChange($event)" class="{{columna}}" scope="col" contenteditable="true" *ngIf="i < this.cantidadNodos">{{columna}}</th>
                 </ng-template>
             </tr>
         </thead>
-        <tbody>
-            <ng-template ngFor let-fila [ngForOf]="alphabet.slice(0,this.nodos)" let-i="index" >
+        <tbody id="contenido">
+            <ng-template ngFor let-fila [ngForOf]="alphabet.slice(0,this.cantidadNodos)" let-i="index" >
                 <tr id="{{fila}}">
-                    <th class="{{fila}}"scope="row" contenteditable="true" *ngIf="i < this.nodos">
+                    <th class="{{fila}}"scope="row" contenteditable="true" *ngIf="i < this.cantidadNodos">
                         {{fila}}
                     </th>
-                    <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.nodos)" let-j="index" >
-                        <td  *ngIf="i == j; else inf" id="{{fila}}{{columna}}">0</td>
+                    <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.cantidadNodos)" let-j="index" >
+                        <td  *ngIf="i == j; else inf" id="{{fila}},{{columna}}">0</td>
                         <ng-template #inf>
                             <td  id="{{fila}},{{columna}}" contenteditable="true" >∞</td>
 
@@ -57,9 +57,13 @@
     <div class="container d-flex justify-content-center">
         <div class="row gx-2">
             <div class="col-auto">
-                <button class="btn btn-primary" (click)="calcularRutasCortas()">Calcular</button>
+                <button class="btn btn-success" (click)="calcularRutasCortas()">Calcular</button>
             </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" (click)="downloadFile()">Generar archivo</button>
+            </div>            
         </div>
+
     </div>
 
 </div>
