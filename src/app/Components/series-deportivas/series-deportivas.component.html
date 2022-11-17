@@ -67,6 +67,7 @@
         </div>
         <div>
             <button type="button" class="btn btn-dark" (click)=this.setBandera()>Vizualizar datos</button>
+            
         </div>
         <div *ngIf="this.bandera==true">
             <h1>Datos generales</h1>
@@ -114,6 +115,7 @@
             </div>
             <div>
                 <button type="button" class="btn btn-dark" (click)=this.algoritmo2()>Calcular probabilidad</button>
+                <button (click)="this.downloadFile()" class="btn btn-primary">Generar Archivo</button>
             </div>
             
         </div>

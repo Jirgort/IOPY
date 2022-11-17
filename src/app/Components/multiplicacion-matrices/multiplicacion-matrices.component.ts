@@ -51,6 +51,23 @@ export class MultiplicacionMatricesComponent implements OnInit {
     }
    
   }
+  createFile():any{
+    let fileResult:any = {}
+    fileResult["numMatrices"] = this.numMatrices;
+    fileResult["dimensiones"] = this.dimensiones;
+   
+    return fileResult;
+  }
+  downloadFile(){
+    let file = JSON.stringify(this.createFile()); 
+    let blob = new Blob([file],{type:'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'archivo.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
   generarTabla2(){
     this.objetosIndex = Array(this.numMatrices).fill(0).map((x,i)=>i);
     return this.objetosIndex;
@@ -80,9 +97,9 @@ export class MultiplicacionMatricesComponent implements OnInit {
     return obj[field as keyof Object];
   }  
   getFileInfo(file:any){
-    if(file.hasOwnProperty("numMatrices") && file.hasOwnProperty("dimenciones")){
+    if(file.hasOwnProperty("numMatrices") && file.hasOwnProperty("dimensiones")){
       this.numMatrices = file["numMatrices"];
-      this.dimensiones=file["dimenciones"]
+      this.dimensiones=file["dimensiones"]
       //Cambia el input en la vista
      
       return 0;

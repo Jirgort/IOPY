@@ -20,6 +20,25 @@ export class SeriesDeportivasComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  createFile():any{
+    let fileResult:any = {}
+    fileResult["numJuegos"] = this.numJuegos;
+    fileResult["probaCasa"] = this.probaCasa;
+    fileResult["probaVisita"] = this.probaVisita;
+    fileResult["formato"] = this.formato;
+    
+    return fileResult;
+  }
+  downloadFile(){
+    let file = JSON.stringify(this.createFile()); 
+    let blob = new Blob([file],{type:'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'archivo.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
   getInputNumJuegos(event:any){
     var x=document.getElementById("probaCasa")?.textContent;
     
