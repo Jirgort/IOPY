@@ -1,0 +1,8 @@
+{
+	"numJuegos":7,
+	"probaCasa":0.55,
+	"probaVisita":0.45,
+	"formato":[
+		"C","C","V","V","V","C","C"	
+	]
+}

@@ -75,7 +75,9 @@ export class RutasCortasComponent implements OnInit {
   }
 
   getInputNodos(event:any){
-    this.cantidadNodos = parseInt(event.target.value);
+    this.nodos = parseInt(event.target.value);
+    console.debug(this.nodos);
+
   }
 
   handleFile(e:any){

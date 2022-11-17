@@ -123,7 +123,6 @@ export class ReemplazoEquiposComponent implements OnInit {
       for (let j = 1; j < matrix[ind].length; j++) {
         let cell:any = row?.querySelector(`td:nth-child(${j+1})`)
         if(cell !== undefined || cell !== null){ 
-          console.log(matrix[i]);
           cell.innerHTML = matrix[ind][j].toString();
           
           ind2++;
@@ -166,9 +165,7 @@ export class ReemplazoEquiposComponent implements OnInit {
       }
       
     }
-    console.log("solucion:-----");
     let ruta=sol.reverse();
-    console.log(ruta);
     return ruta;
   }
   getObjectNames(){
@@ -205,22 +202,14 @@ export class ReemplazoEquiposComponent implements OnInit {
           break;
         }
         if(cont>plazo||vida>this.vidaUtil){
- 
-          console.log("minimo: ");
-          
+
           suma=Math.min.apply(null,arrMin);
-          console.log("numero proximo: ");
-          console.log(numProx);
-          console.log(numProx[0][1]);
           for(m=0;m<numProx.length;m++){
             if(suma==numProx[m][1]){
               arraux2[2]=numProx[m][0];
             }
 
           }
-          console.log(suma);
-          console.log("lista arrmin:  ");
-          console.log(arrMin);
           arraux2[0]=vari;
           arraux2[1]=suma;
           arr.push(arraux2);
@@ -233,22 +222,13 @@ export class ReemplazoEquiposComponent implements OnInit {
         if(arr[i][0]==cont){
           if(vida==this.vidaUtil){
             cont++;
-            console.log("contadorrrrrrrrrrrrrrr");
+            
           }else{
             suma=0;
           
           dif=Math.abs(cont-vari);
           suma+=diff[dif-1]+arr[i][1];
-          console.log("variii");
-          console.log(vari);
-          console.log("contador");
-          console.log(cont);
-          console.log(diff[dif-1]);
-          console.log(arr[i][1]);
-          
-          console.log("Guado: ");
-          //console.log(arraux2);
-          console.log(suma);
+        
 
           arrMin.push(suma);
           numP[0]=cont;
@@ -264,7 +244,7 @@ export class ReemplazoEquiposComponent implements OnInit {
       }
     }
     let reversa=arr.reverse();
-    console.log(reversa);
+    
     return reversa;
    
   }
@@ -280,22 +260,15 @@ export class ReemplazoEquiposComponent implements OnInit {
         let suma2=0;
         while(l<=i){
           suma2+=valsMante[l];
-          //console.log(valsMante[l]);
+          
           
           l++;
         }
-        //console.log(suma2);
-        arr[i]=costoInicial+suma2-valVenta[i];
         
-      
-      
-     //arr[i]=costoInicial+
-      
+        arr[i]=costoInicial+suma2-valVenta[i];
 
     }
-    /*for(r=0;r<arr.length-1;r++){
-      console.log(arr[r]);
-    }*/
+   
     return arr;
 
 

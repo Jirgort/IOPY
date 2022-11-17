@@ -42,7 +42,6 @@ export class MultiplicacionMatricesComponent implements OnInit {
   setDimencionColumna(NumColumna:any){
     this.columnaAct=parseInt(NumColumna);
     this.dimensiones.push(this.columnaAct);
-    console.log(this.dimensiones);
     this.bandera3=true;
   }
   setContador(){
@@ -51,6 +50,23 @@ export class MultiplicacionMatricesComponent implements OnInit {
       this.bandera2=true;
     }
    
+  }
+  createFile():any{
+    let fileResult:any = {}
+    fileResult["numMatrices"] = this.numMatrices;
+    fileResult["dimensiones"] = this.dimensiones;
+   
+    return fileResult;
+  }
+  downloadFile(){
+    let file = JSON.stringify(this.createFile()); 
+    let blob = new Blob([file],{type:'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'archivo.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
   generarTabla2(){
     this.objetosIndex = Array(this.numMatrices).fill(0).map((x,i)=>i);
@@ -81,9 +97,9 @@ export class MultiplicacionMatricesComponent implements OnInit {
     return obj[field as keyof Object];
   }  
   getFileInfo(file:any){
-    if(file.hasOwnProperty("numMatrices") && file.hasOwnProperty("dimenciones")){
+    if(file.hasOwnProperty("numMatrices") && file.hasOwnProperty("dimensiones")){
       this.numMatrices = file["numMatrices"];
-      this.dimensiones=file["dimenciones"]
+      this.dimensiones=file["dimensiones"]
       //Cambia el input en la vista
      
       return 0;
@@ -102,7 +118,7 @@ export class MultiplicacionMatricesComponent implements OnInit {
       for (let j = 1; j < matrix[ind].length+1; j++) {
         let cell:any = row?.querySelector(`td:nth-child(${j+1})`)
         if(cell !== undefined || cell !== null){ 
-          console.log(matrix[i]);
+         
           cell.innerHTML = matrix[ind][j-1].toString();
           
           ind2++;
@@ -123,7 +139,7 @@ export class MultiplicacionMatricesComponent implements OnInit {
       for (let j = 1; j < matrix[ind].length+1; j++) {
         let cell:any = row?.querySelector(`td:nth-child(${j+1})`)
         if(cell !== undefined || cell !== null){ 
-          console.log(matrix[i]);
+         
           cell.innerHTML = matrix[ind][j-1].toString();
           
           ind2++;
@@ -194,17 +210,6 @@ export class MultiplicacionMatricesComponent implements OnInit {
             k=i;
            
             while(k<j){
-              console.log("mi dimencion[i]")
-              console.log(this.dimensiones[i]);
-              console.log("mi dimencion[j]")
-              console.log(this.dimensiones[j+1]);
-              console.log("mi dimencion[k]")
-              console.log(this.dimensiones[k+1]);
-              console.log("arr[i][k]");
-              console.log(arr[i][k]);
-              console.log("arr[k+1][j]");
-              console.log(arr[k+1][k]);
-              console.log(this.dimensiones[k+1]);
               arrmin.push(arr[i][k]+arr[k+1][j]+this.dimensiones[i]*this.dimensiones[j+1]*this.dimensiones[k+1]);
               arrminP.push(k);
               k+=1;
@@ -222,10 +227,7 @@ export class MultiplicacionMatricesComponent implements OnInit {
           j+=1
           break;
           
-         
         }
-        console.log("mi array")
-        console.log(arr);
         i+=1;
         
   
@@ -246,7 +248,7 @@ export class MultiplicacionMatricesComponent implements OnInit {
     for(let m=1;m<matrix.length+1;m++){
         cadena+="A"+m.toString()+" ";
     }
-    console.log(cadena);
+    
     for(let i=0;i<matrix.length;i++){
       for(j=matrix.length;j>1;j--){
         let l=i+1;
@@ -256,15 +258,7 @@ export class MultiplicacionMatricesComponent implements OnInit {
         let cad="("+indew;
         let cad2=indv+")";
         cadena.replace("A1","B2");
-        //cadena.replace(indv.toString(),cad2.toString());
-        //newCadena= "("+cadena[cadena.indexOf(indew)];
-        console.log(indew);
-        console.log(cadena.includes(indew));
-        console.log(cadena);
-       //console.log(cadena[cadena.indexOf("A"+l.toString())]);
-        /*cadena.replace(cadena[cadena.indexOf("A"+l.toString())],newCadena);
-        newCadena= cadena[cadena.indexOf("A"+matrix[i][j])]+")";
-        cadena.replace(cadena[cadena.indexOf("A"+matrix[i][j])],newCadena);*/
+        
       }
       
     }
