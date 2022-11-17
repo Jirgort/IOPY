@@ -1,0 +1,27 @@
+{
+	"costoInicial":9999,
+	"plazo":8,
+	"vidaUtil":4,
+	"objetos":[
+		{
+			"ano": 0,
+			"mantenimiento": 305,
+			"reventa": 7125
+		},
+		{
+			"ano": 1,
+			"mantenimiento": 530,
+			"reventa": 5000
+		},
+		{
+			"ano": 2,
+			"mantenimiento": 800,
+			"reventa": 3700
+		},
+		{
+			"ano": 3,
+			"mantenimiento": 1100,
+			"reventa": 3700
+		}			
+	]
+}
