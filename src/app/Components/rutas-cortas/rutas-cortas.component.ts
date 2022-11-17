@@ -14,7 +14,7 @@ export class RutasCortasComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // console.log(tabla?.rows);
+   
   }
 
   calcularRutasCortas(){
@@ -76,7 +76,6 @@ export class RutasCortasComponent implements OnInit {
 
   getInputNodos(event:any){
     this.nodos = parseInt(event.target.value);
-    console.debug(this.nodos);
 
   }
 

@@ -22,7 +22,7 @@ export class SeriesDeportivasComponent implements OnInit {
   }
   getInputNumJuegos(event:any){
     var x=document.getElementById("probaCasa")?.textContent;
-    console.log(x);
+    
     
     this.numJuegos = parseInt(event.target.value);
     this.numJuegosTabla=Math.floor(this.numJuegos/2)+1;
@@ -30,7 +30,7 @@ export class SeriesDeportivasComponent implements OnInit {
   getInputProbaCasa(event:any){
    
     this.probaCasa = event.target.value;
-    console.log(this.probaCasa);
+   
   }
   getInputProbaVisita(event:any){
     this.probaVisita =event.target.value;
@@ -50,8 +50,7 @@ export class SeriesDeportivasComponent implements OnInit {
         
           this.contadorFormato+=1;
           this.formato.push("C");
-          console.log(this.formato);
-          console.log(this.probaCasa);
+          
         
       }
     }
@@ -94,7 +93,7 @@ export class SeriesDeportivasComponent implements OnInit {
   getVisitaB(){
     let varr=0;
     varr=this.recortar(1-this.probaVisita);
-    console.log(this.recortar(0.458789));
+   
     return varr;
   }
   setBandera(){
@@ -128,7 +127,7 @@ export class SeriesDeportivasComponent implements OnInit {
       for (let j = 1; j < matrix[ind].length; j++) {
         let cell:any = row?.querySelector(`td:nth-child(${j+2})`)
         if(cell !== undefined || cell !== null){ 
-          console.log(matrix[i]);
+         
           cell.innerHTML = matrix[ind][j].toString();
           
           ind2++;
@@ -172,16 +171,7 @@ algoritmo2(){
       if(this.formato[diferencia]=="C"){
         let calculo=0;
         calculo=this.recortar(this.getCasaB()*arr[i][j-1]+this.probaCasa*arr[i-1][j]);
-        console.log("posicionDerecha");
-        console.log(arr[i][j-1]);
-        console.log("PrbaVisita");
-        console.log(this.getCasaB());
-        console.log("posicionArriba");
-        console.log(arr[i-1][j]);
-        console.log("PrbaCasa");
-        console.log(this.probaCasa);
-        console.log("Calculo");
-        console.log(calculo);
+  
         arr[i][j]=calculo;
 
       }else{
@@ -194,7 +184,7 @@ algoritmo2(){
       
     }
   }
-  console.log(arr);
+ 
   this.showResult(arr);
   
 }
@@ -204,8 +194,7 @@ getFileInfo(file:any){
     this.probaCasa=file["probaCasa"];
     this.probaVisita=file["probaVisita"];
     this.formato=file["formato"];
-    console.log("Juegos");
-    console.log(this.numJuegos);
+    
     //Cambia el input en la vista
    
     return 0;
