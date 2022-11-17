@@ -8,13 +8,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class RutasCortasComponent implements OnInit {
 
   public alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  public nodos:number =  0;
+  public cantidadNodos:number =  0;
   constructor() { }
 
 
   ngOnInit(): void {
 
-    // console.log(tabla?.rows);
   }
 
   calcularRutasCortas(){
@@ -35,6 +34,7 @@ export class RutasCortasComponent implements OnInit {
     }
     let resultado = this.floyd(matriz);
     this.reemplazarDatosTabla(resultado);
+    alert("Se ha calculado las rutas cortas");
   }
 
   reemplazarDatosTabla(matrizResultado:any){
@@ -75,16 +75,47 @@ export class RutasCortasComponent implements OnInit {
   }
 
   getInputNodos(event:any){
-    this.nodos = parseInt(event.target.value);
-    console.debug(this.nodos);
-
+    this.cantidadNodos = parseInt(event.target.value);
   }
-
-
 
   handleFile(e:any){
     let file = e.target.files[0];
     let reader = new FileReader();
   
+  }
+
+  createFile():any{
+    let fileResult:any = {}
+    fileResult["cantidadNodos"] = this.cantidadNodos;
+    fileResult["encabezadoNodos"] = [];
+    fileResult["nodos"] = [];
+    document.getElementById('tabla')?.querySelectorAll('th').forEach((element:any) => {
+      fileResult["encabezadoNodos"].push(element.innerHTML);
+    });
+    document.getElementById("tabla")?.querySelectorAll("tr").forEach((row:any, index) => {
+      if(index != 0){
+        let obj:any = {};
+        let nodo:any = {}
+        nodo[row.id] = [];
+        row.querySelectorAll("td").forEach((cell:any) => {
+          let data:any = {}
+          data[cell.id] = cell.innerHTML;
+          nodo[row.id].push(data);
+        });
+        fileResult["nodos"].push(nodo);
+      }
+    });
+    return fileResult;
+  }
+
+  downloadFile(){
+    let file = JSON.stringify(this.createFile()); 
+    let blob = new Blob([file],{type:'application/json'});
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = 'archivo.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 }
