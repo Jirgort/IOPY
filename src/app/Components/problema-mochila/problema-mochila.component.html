@@ -46,6 +46,7 @@
                 <ng-template [ngIf]="(this.archivo |json) == ({}|json)" [ngIfElse]="fileTable">
                     <tr *ngFor="let c of objetosIndex" >
                         <td contenteditable="true">Objeto {{c}}</td>
+                        
                         <td>
                             <input class="form-control" type="number" placeholder="valor">
                         </td>

@@ -1,7 +1,100 @@
-<div class="window-notice" id="window-notice">
-    <div class="content">
-        <div class="content-text">EL programa solicitado no está disponible. 
-     
-        <div class="content-buttons"><a href="#" id="close-button">Aceptar</a></div>
+<div class="container mt-2" style="width: 724px;" >
+    <!-- Input para generar tabla  -->
+    <div class="container text-center" >
+        <div class="row justify-content-md-center">
+            <div class="col input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                        Numero de Matrices
+                </span>
+                <input id="numMatrices" style="width: 50px;" (input)="getInputNumMatrices($event)" type="text" class="form-control"
+                    placeholder="Ingrese el numero de matrices">
+                <button type="button" class="btn btn-dark" (click)=this.setBandera()>Agregar</button>
+            </div>
+        </div>
+       
+        <div *ngIf="this.bandera==true">
+            <div>
+                <h1>Agregar dimenciones</h1>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col input-group mb-3">
+                    <span class="input-group-text material-symbols-outlined">
+                            Numero de Filas
+                    </span>
+                    <input id="inputFilas" #numFilas style="width: 50px;" type="text" class="form-control"
+                        placeholder="Filas" >
+
+                    <span class="input-group-text material-symbols-outlined">
+                            Numero de Columnas
+                    </span>
+                    <input id="InputColumnas" #numColumnas style="width: 50px;"  type="text" class="form-control"
+                        placeholder="Columnas">
+                        <button type="button" class="btn btn-dark" (click)="this.setDimencionFila(numFilas.value) ; this.setDimencionColumna(numColumnas.value);numFilas.value=dimensiones[dimensiones.length-1]; numFilas.disabled=true; numColumnas.value='';this.setContador();">Añadir</button>
+                </div>
+
+            </div>
+            <div>
+                
+                
+            </div>
+        </div>
+        <div class="container d-flex justify-content-center">
+            <div class="row gx-2">
+                <div class="col-auto">
+                    <button class="btn btn-primary" (click)=this.generarTabla()>Generar tabla</button>
+                </div>
+                <div class="col-auto d-inline-flex">
+                    <input type="file" accept=".json" class="form-control" (change)="this.handleFile($event)">
+                </div>
+            </div>
+        </div>
+        <div *ngIf="bandera2==true" >
+            <h1>
+                Tabla M
+            </h1>
+            <table id="resultTable" class="table table-striped bg-white rounded">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let nombre of generarTabla2()">
+                          {{nombre+1}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let col of generarTabla2()">
+                        <td>{{col+1}}</td>
+                        <td *ngFor="let col of generarTabla2()">
+                            0
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h1>Tabla P</h1>
+            <table id="resultTableP" class="table table-striped bg-white rounded">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let nombre of generarTabla2()">
+                          {{nombre+1}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let col of generarTabla2()">
+                        <td>{{col+1}}</td>
+                        <td *ngFor="let col of generarTabla2()">
+                            0
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+         
+                <button type="button" class="btn btn-dark" (click)=this.algoritmo()>Ejecutar Algorimo</button>
+            
+        </div>
+        </div>
+       
     </div>
-  </div>
+</div>
