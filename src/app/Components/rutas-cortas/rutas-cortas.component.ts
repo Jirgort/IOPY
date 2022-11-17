@@ -8,7 +8,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class RutasCortasComponent implements OnInit {
 
   public alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
+  public nodos:number =  0;
   constructor() { }
 
 
@@ -72,5 +72,19 @@ export class RutasCortasComponent implements OnInit {
       const element = headers[i];
         element.innerHTML = e.target.innerHTML;
     }
+  }
+
+  getInputNodos(event:any){
+    this.nodos = parseInt(event.target.value);
+    console.debug(this.nodos);
+
+  }
+
+
+
+  handleFile(e:any){
+    let file = e.target.files[0];
+    let reader = new FileReader();
+  
   }
 }

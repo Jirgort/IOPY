@@ -1,30 +1,65 @@
-<div class="container bg-white text-center">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<div class="container mt-2">
+    <!-- Input para generar tabla  -->
+    <div class="container text-center">
+        <div class="row justify-content-md-center">
+            <div class="col input-group mb-3">
+                <span class="input-group-text material-symbols-outlined">
+                    category
+                </span>
+                <input id="nodos"  type="number" class="form-control"
+                    placeholder="Ingrese el número de nodos" (input) = "getInputNodos($event)">
+            </div>
+        </div>
+        <div class="container d-flex justify-content-center">
+            <div class="row gx-2">
+                <div class="col-auto d-inline-flex">
+                    <input type="file" accept=".json" class="form-control" (change)="this.handleFile($event)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container bg-white text-center mt-5">
     <table class="table" id="tabla">
         <thead>
             <tr>
                 <th>
-
                 </th>
-                <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,10)" let-i="index" >
-                    <th (input)="onNameChange($event)" class="{{columna}}" scope="col" contenteditable="true" *ngIf="i < 10">{{columna}}</th>
+                <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.nodos)" let-i="index" >
+                    <th (input)="onNameChange($event)" class="{{columna}}" scope="col" contenteditable="true" *ngIf="i < this.nodos">{{columna}}</th>
                 </ng-template>
             </tr>
         </thead>
         <tbody>
-            <ng-template ngFor let-fila [ngForOf]="alphabet.slice(0,10)" let-i="index" >
+            <ng-template ngFor let-fila [ngForOf]="alphabet.slice(0,this.nodos)" let-i="index" >
                 <tr id="{{fila}}">
-                    <th class="{{fila}}"scope="row" contenteditable="true" *ngIf="i < 10">
+                    <th class="{{fila}}"scope="row" contenteditable="true" *ngIf="i < this.nodos">
                         {{fila}}
                     </th>
-                    <ng-template ngFor let-columna [ngForOf]="alphabet" let-j="index" >
-                        <td  *ngIf="i == j" id="{{fila}}{{columna}}">0</td>
-                        <td  id="{{fila}},{{columna}}" contenteditable="true" *ngIf="j < 9">∞</td>
+                    <ng-template ngFor let-columna [ngForOf]="alphabet.slice(0,this.nodos)" let-j="index" >
+                        <td  *ngIf="i == j; else inf" id="{{fila}}{{columna}}">0</td>
+                        <ng-template #inf>
+                            <td  id="{{fila}},{{columna}}" contenteditable="true" >∞</td>
+
+                        </ng-template>
                     </ng-template>
                 </tr>
             </ng-template>
         </tbody>
 
     </table>
-    <button class="btn btn-primary" (click)="calcularRutasCortas()">Calcular</button>
+
+    <div class="container d-flex justify-content-center">
+        <div class="row gx-2">
+            <div class="col-auto">
+                <button class="btn btn-primary" (click)="calcularRutasCortas()">Calcular</button>
+            </div>
+        </div>
+    </div>
 
 </div>
