@@ -15,6 +15,7 @@ export class SeriesDeportivasComponent implements OnInit {
   bandera:boolean=false;
   bandera2:boolean=false;
   tabla:number[]=[];
+  archivo:Object = {};
   constructor() { }
 
   ngOnInit(): void {
@@ -98,13 +99,24 @@ export class SeriesDeportivasComponent implements OnInit {
   }
   setBandera(){
     if(this.bandera2){
+     
       this.bandera=true;
     }
   }
   generarTabla(){
+    this.numJuegosTabla=Math.floor(this.numJuegos/2)+1;
     this.tabla=Array(this.numJuegosTabla+1).fill(0).map((x,i)=>i);
     
     return this.tabla;
+
+  }
+  generarTabla2(){
+    if(Object.keys(this.archivo).length != 0 && this.getFileInfo(this.archivo) ){
+      this.bandera2=true;
+      return;
+    }
+    this.numJuegosTabla=Math.floor(this.numJuegos/2)+1;
+    this.tabla = Array(this.numJuegosTabla+1).fill(0).map((x,i)=>i);
 
   }
   showResult(matrix:number[][]){
@@ -184,6 +196,36 @@ algoritmo2(){
   }
   console.log(arr);
   this.showResult(arr);
+  
+}
+getFileInfo(file:any){
+  if(file.hasOwnProperty("numJuegos") && file.hasOwnProperty("probaCasa")&&file.hasOwnProperty("probaVisita")&&file.hasOwnProperty("formato")){
+    this.numJuegos = file["numJuegos"];
+    this.probaCasa=file["probaCasa"];
+    this.probaVisita=file["probaVisita"];
+    this.formato=file["formato"];
+    console.log("Juegos");
+    console.log(this.numJuegos);
+    //Cambia el input en la vista
+   
+    return 0;
+  }else{
+    alert("El archivo no contiene la información necesaria");
+    return 1;
+  } 
+  
+}
+handleFile(event:any){
+  var file = event.target.files[0];
+  var reader = new FileReader();
+
+  //Carga el archivo en una variable
+  reader.onload = (event) => {
+    this.archivo = JSON.parse(event.target?.result?.toString() || ""); // Convierte el archivo a JSON
+  }
+
+  reader.readAsText(file); //lee el archivo como texto
+  this.bandera2=true;
   
 }
 
