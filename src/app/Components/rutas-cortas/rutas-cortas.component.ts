@@ -107,8 +107,15 @@ export class RutasCortasComponent implements OnInit {
 
     let encabezados:any = document.getElementById("encabezados")
     for (let i = 0; i < archivo["encabezadoNodos"].length; i++) {
-      encabezados["children"][i].innerText = archivo["encabezadoNodos"][i]
+      let element:any = encabezados["children"][i]
+      element.innerText = archivo["encabezadoNodos"][i]
+      let headers = document.getElementsByClassName(element.className);
+      let header:any = headers[1] 
+      if(header!== undefined){
+        header.innerText = archivo["encabezadoNodos"][i]
+      }
     }
+    
 
     let nodos = archivo["nodos"];
     for (let i = 0; i < nodos.length; i++) {
