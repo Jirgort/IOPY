@@ -115,8 +115,9 @@ export class RutasCortasComponent implements OnInit {
       Object.keys(nodos[i]).forEach((key) => {
         let arreglo = nodos[i][key];
         for (let j = 0; j < arreglo.length; j++) {
-          let id = Object.keys(arreglo[j])
-          console.log(arreglo[i], id)
+          let id = Object.keys(nodos[i][key][j])
+          let element:any = document.getElementById(id[0])
+          element.innerText = nodos[i][key][j][id[0]]
         }
       });
       
